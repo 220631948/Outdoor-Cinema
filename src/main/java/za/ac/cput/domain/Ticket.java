@@ -2,6 +2,7 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.util.Objects;
@@ -21,11 +22,13 @@ public class Ticket {
 
     @Column(name = "ticket_price", nullable = false)
     @NotBlank(message = "price is required")
+    @Positive(message = "price must be positive")
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private double price;
 
     @Column(name = "ticket_quantity", nullable = false)
     @NotBlank(message = "quantity is required")
+    @Positive(message = "quantity must be positive")
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     private int quantity;
 
