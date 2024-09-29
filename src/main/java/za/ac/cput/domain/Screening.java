@@ -38,11 +38,10 @@ public class Screening {
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "scrrening_id")
+    @JoinColumn(name = "venue_id")
     private Venue venue;
 
-    @OneToMany
-    @JoinColumn(name = "screening_booking")
+    @OneToMany(mappedBy = "screening", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Booking> bookings;
 
     protected Screening() {
@@ -61,10 +60,15 @@ public class Screening {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Screening screening = (Screening) o;
-        return Objects.equals(id, screening.id) && Objects.equals(date, screening.date) && Objects.equals(name, screening.name) && Objects.equals(time, screening.time) && Objects.equals(movie, screening.movie) && Objects.equals(venue, screening.venue) && Objects.equals(bookings, screening.bookings);
+        return Objects.equals(id, screening.id) && Objects.equals(date, screening.date)
+                && Objects.equals(name, screening.name) && Objects.equals(time, screening.time)
+                && Objects.equals(movie, screening.movie) && Objects.equals(venue, screening.venue)
+                && Objects.equals(bookings, screening.bookings);
     }
 
     @Override
