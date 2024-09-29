@@ -55,7 +55,6 @@ public class Screening {
         this.movie = builder.movie;
         this.venue = builder.venue;
         this.bookings = builder.bookings;
-
     }
 
     @Override
@@ -137,6 +136,10 @@ public class Screening {
             this.venue = screening.venue;
             this.bookings = screening.bookings;
             return this;
+        }
+
+        public Screening build() {
+            return new Screening(this);
         }
     }
 }
