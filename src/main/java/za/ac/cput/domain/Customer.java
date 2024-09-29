@@ -20,7 +20,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Getter
-@ToString
 @Entity
 @Table(name = "customers")
 public class Customer {
