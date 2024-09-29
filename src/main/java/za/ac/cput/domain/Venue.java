@@ -3,8 +3,6 @@ package za.ac.cput.domain;
 import java.util.Objects;
 import java.util.Set;
 
-import org.hibernate.mapping.UniqueKey;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +31,7 @@ public class Venue {
     private int capacity;
 
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Screenings> screenings;
+    private Set<Screening> screenings;
 
     protected Venue() {
     }
@@ -62,19 +60,21 @@ public class Venue {
         return capacity;
     }
 
-    public Set<Screenings> getScreenings() {
+    public Set<Screening> getScreenings() {
         return screenings;
     }
 
     // equals and hashcode
 
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Venue venue = (Venue) o;
-        return capacity == venue.capacity && Objects.equals(id, venue.id) && Objects.equals(name, venue.name) && Objects.equals(address, venue.address) && Objects.equals(screenings, venue.screenings);
+        return capacity == venue.capacity && Objects.equals(id, venue.id) && Objects.equals(name, venue.name)
+                && Objects.equals(address, venue.address) && Objects.equals(screenings, venue.screenings);
     }
 
     @Override
@@ -98,35 +98,26 @@ public class Venue {
         private String name;
         private String address;
         private int capacity;
-        private Set<Screenings> screenings;
+        private Set<Screening> screenings;
 
-        public Builder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder name(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder address(String address) {
+        public Builder setAddress(String address) {
             this.address = address;
             return this;
         }
 
-        public Builder capacity(int capacity) {
+        public Builder setCapacity(int capacity) {
             this.capacity = capacity;
             return this;
         }
 
-        public Builder screenings(Set<Screenings> screenings) {
+        public Builder setScreenings(Set<Screening> screenings) {
             this.screenings = screenings;
             return this;
-        }
-
-        public Venue build() {
-            return new Venue(this);
         }
 
         public Builder copy(Venue venue) {
@@ -136,6 +127,10 @@ public class Venue {
             this.capacity = venue.capacity;
             this.screenings = venue.screenings;
             return this;
+        }
+
+        public Venue build() {
+            return new Venue(this);
         }
     }
 
