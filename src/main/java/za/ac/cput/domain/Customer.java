@@ -3,6 +3,8 @@ package za.ac.cput.domain;
 import java.util.Objects;
 import java.util.Set;
 
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.format.annotation.NumberFormat;
 
 import jakarta.persistence.CascadeType;
@@ -17,6 +19,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Getter
+@ToString
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -43,6 +47,7 @@ public class Customer {
     private String password;
 
     @OneToMany(mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<Booking> bookings;
 
     protected Customer() {
@@ -55,31 +60,6 @@ public class Customer {
         this.phoneNumber = builder.phoneNumber;
         this.password = builder.password;
         this.bookings = builder.bookings;
-    }
-
-    // getters
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public Set<Booking> getBookings() {
-        return bookings;
     }
 
     // equals and hashcode

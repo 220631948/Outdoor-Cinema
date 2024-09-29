@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,9 +24,12 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Getter
+@ToString
 @Entity
 @Table(name = "movies")
 public class Movie {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "movie_id")
@@ -50,6 +55,7 @@ public class Movie {
     @Column(name = "movie_release_year")
     private java.util.Date releaseYear;
 
+    @Getter
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -59,6 +65,7 @@ public class Movie {
     private Date lastModifiedDate;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<Screening> screenings;
 
     protected Movie() {
@@ -71,39 +78,6 @@ public class Movie {
         this.duration = builder.duration;
         this.releaseYear = builder.releaseYear;
         this.screenings = builder.screenings;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public @NotBlank(message = "title is required") @Size(min = 2, max = 100) String getTitle() {
-        return title;
-    }
-
-    public @NotBlank(message = "director is required") @Size(min = 5, max = 50) String getDirector() {
-        return director;
-    }
-
-    @NotBlank(message = "duration is required")
-    public int getDuration() {
-        return duration;
-    }
-
-    public Date getReleaseYear() {
-        return releaseYear;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public Set<Screening> getScreenings() {
-        return screenings;
     }
 
     @Override
@@ -125,19 +99,6 @@ public class Movie {
         return Objects.hash(id, title, director, duration, releaseYear, createdDate, lastModifiedDate, screenings);
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", director='" + director + '\'' +
-                ", duration=" + duration +
-                ", releaseYear=" + releaseYear +
-                ", createdDate=" + createdDate +
-                ", lastModifiedDate=" + lastModifiedDate +
-                ", screenings=" + screenings +
-                '}';
-    }
 
     public static class Builder {
         private Long id;
