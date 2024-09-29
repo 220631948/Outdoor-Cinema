@@ -3,13 +3,7 @@ package za.ac.cput.domain;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -17,20 +11,25 @@ import jakarta.validation.constraints.Size;
 public class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "venue_id")
     private Long id;
 
     @NotBlank(message = "name is required")
     @Size(min = 10, max = 50)
+    @Column(name = "venue_name")
     private String name;
 
     @NotBlank(message = "address is required")
     @Size(min = 10, max = 100)
+    @Column(name = "venue_address")
     private String address;
 
     @NotBlank(message = "capacity is required")
+    @Column(name = "venue_capacity")
     private int capacity;
 
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "venue_screening")
     private Set<Screening> screenings;
 
     protected Venue() {
