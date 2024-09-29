@@ -3,6 +3,8 @@ package za.ac.cput.domain;
 import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,13 +28,14 @@ public class Customer {
     @Size(max = 50)
     private String firstName;
 
-    @Email
+    @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
     @Size(max = 50)
     private String email;
 
     @NotBlank(message = "Phone number is required")
     @Size(max = 10)
+    @NumberFormat(pattern = "123-456-7890")
     private String phoneNumber;
 
     @NotBlank(message = "password is required")
