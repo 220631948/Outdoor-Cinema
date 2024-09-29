@@ -1,6 +1,7 @@
 package za.ac.cput.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -52,4 +53,83 @@ public class Promo {
     @Size(min = 10, max = 10, message = "End date must be in the format yyyy-MM-dd")
     private Date endDate;
 
+    protected Promo() {
+    }
+
+    private Promo(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.discountPercentage = builder.discountPercentage;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Promo promo = (Promo) o;
+        return discountPercentage == promo.discountPercentage && Objects.equals(id, promo.id)
+                && Objects.equals(code, promo.code) && Objects.equals(startDate, promo.startDate)
+                && Objects.equals(endDate, promo.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, code, discountPercentage, startDate, endDate);
+    }
+
+    @Override
+    public String toString() {
+        return "Promo{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", discountPercentage=" + discountPercentage +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
+
+    public static class Builder {
+        private Long id;
+        private String code;
+        private int discountPercentage;
+        private Date startDate;
+        private Date endDate;
+
+        public Builder setCode(String code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder setDiscountPercentage(int discountPercentage) {
+            this.discountPercentage = discountPercentage;
+            return this;
+        }
+
+        public Builder setStartDate(Date startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public Builder setEndDate(Date endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Promo build() {
+            return new Promo(this);
+        }
+
+        public Builder copy(Promo promo) {
+            this.id = promo.id;
+            this.code = promo.code;
+            this.discountPercentage = promo.discountPercentage;
+            this.startDate = promo.startDate;
+            this.endDate = promo.endDate;
+            return this;
+        }
+    }
 }
