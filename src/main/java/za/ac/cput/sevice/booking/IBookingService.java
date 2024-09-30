@@ -1,4 +1,7 @@
 package za.ac.cput.sevice.booking;
 
-public interface IBookingSrvice {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface IBookingService {
 }
