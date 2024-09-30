@@ -1,4 +1,4 @@
-package za.ac.cput.domain.config;
+package za.ac.cput.config;
 
 public class SecurityConfig {
 }
