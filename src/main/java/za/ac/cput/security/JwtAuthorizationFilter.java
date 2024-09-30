@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import za.ac.cput.util.JwtUtil;
+import za.ac.cput.utils.AuthenticationUtil;
 
 import java.io.IOException;
 
@@ -69,6 +70,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
      * @param request the HTTP request
      */
     private void authenticateUser(String username, String jwt, HttpServletRequest request) {
+        AuthenticationUtil.authenticateUser(userDetailsService, jwtUtil, username, jwt, request);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails.getUsername()))) {
