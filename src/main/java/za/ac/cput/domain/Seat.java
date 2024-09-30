@@ -18,8 +18,8 @@ public class Seat {
     private Long id;
 
     @NotBlank(message = "Type is required")
-    @Column(name = "seat_type", nullable = false)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private SeatType type;
 
     @NotBlank(message = "Row is required")
     @Column(name = "seat_row", nullable = false)
@@ -46,28 +46,25 @@ public class Seat {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Seat seat = (Seat) o;
-        return number == seat.number && Objects.equals(id, seat.id) && Objects.equals(row, seat.row)
-                && Objects.equals(screening, seat.screening);
+        return number == seat.number && Objects.equals(id, seat.id) && type == seat.type && Objects.equals(row, seat.row) && Objects.equals(screening, seat.screening);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, row, number, screening);
+        return Objects.hash(id, type, row, number, screening);
     }
 
     public static class Builder {
         private Long id;
-        private String type;
+        private SeatType type;
         private String row;
         private int number;
         private Screening screening;
 
-        public Builder setType(String type) {
+        public Builder setType(SeatType type) {
             this.type = type;
             return this;
         }
