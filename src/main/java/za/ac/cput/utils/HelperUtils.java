@@ -11,6 +11,22 @@ public class HelperUtils {
         return s == null || s.trim().isEmpty();
     }
 
+    // check if a int is null or empty
+    public static boolean isNullOrEmpty(Integer i) {
+        return i == null || i == 0;
+    }
+
+    // check if a double is null or empty
+    public static boolean isNullOrEmpty(Double d) {
+        return d == null || d == 0.0;
+    }
+
+    // Check if a email is valid
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
+    public static boolean isValidEmail(String email) {
+        return !isNullOrEmpty(email);
+    }
+
     // Check if a number is null or zero
     public static boolean isNullOrZero(Integer i) {
         return i == null || i == 0;

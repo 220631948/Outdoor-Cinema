@@ -31,6 +31,10 @@ public class Customer {
     @Size(max = 50)
     private String firstName;
 
+    @NotBlank(message = "Last name is required")
+    @Size(max = 50)
+    private String lastName;
+
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
     @Size(max = 50)
@@ -49,16 +53,21 @@ public class Customer {
     @ToString.Exclude
     private Set<Booking> bookings;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Order> orders;
+
     protected Customer() {
     }
 
     private Customer(Builder builder) {
         this.id = builder.id;
         this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
         this.email = builder.email;
         this.phoneNumber = builder.phoneNumber;
         this.password = builder.password;
         this.bookings = builder.bookings;
+        this.orders = builder.orders;
     }
 
     // equals and hashcode
@@ -85,23 +94,32 @@ public class Customer {
         return "Customer{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", bookings=" + bookings +
+                ", orders=" + orders +
                 '}';
     }
 
     public static class Builder {
         private Long id;
         private String firstName;
+        private String lastName;
         private String email;
         private String phoneNumber;
         private String password;
         private Set<Booking> bookings;
+        private Set<Order> orders;
 
         public Builder setFistName(String firstName) {
             this.firstName = firstName;
+            return this;
+        }
+
+        public Builder setLastName(String lastName) {
+            this.lastName = lastName;
             return this;
         }
 
@@ -125,13 +143,20 @@ public class Customer {
             return this;
         }
 
+        public Builder setOrders(Set<Order> orders) {
+            this.orders = orders;
+            return this;
+        }
+
         public Builder copy(Customer customer) {
             this.id = customer.id;
             this.firstName = customer.firstName;
+            this.lastName = customer.lastName;
             this.email = customer.email;
             this.phoneNumber = customer.phoneNumber;
             this.password = customer.password;
             this.bookings = customer.bookings;
+            this.orders = customer.orders;
             return this;
         }
 
