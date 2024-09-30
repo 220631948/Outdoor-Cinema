@@ -1,22 +1,22 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.Booking;
-import za.ac.cput.domain.Customer;
+import za.ac.cput.domain.user.User;
 import za.ac.cput.domain.Order;
 import za.ac.cput.utils.HelperUtils;
 
 import java.util.Set;
 
-public class CustomerFactory {
+public class UserFactory {
 
-    public static Customer createCustomer(String firstName, String lastName, String email) {
+    public static User createCustomer(String firstName, String lastName, String email) {
         if (!HelperUtils.isNullOrEmpty(firstName)
                 || !HelperUtils.isNullOrEmpty(lastName)
                 || !HelperUtils.isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid name or email");
         }
 
-        return new Customer.Builder()
+        return new User.Builder()
                 .setFistName(firstName)
                 .setLastName(lastName)
                 .setEmail(email)
@@ -24,8 +24,8 @@ public class CustomerFactory {
     }
 
     // factory with firstname lastname, email, phone number and password
-    public static Customer createCustomer(String firstName, String lastName, String email, String phoneNumber,
-            String password) {
+    public static User createCustomer(String firstName, String lastName, String email, String phoneNumber,
+                                      String password) {
         if (!HelperUtils.isNullOrEmpty(firstName)
                 || !HelperUtils.isNullOrEmpty(lastName)
                 || !HelperUtils.isValidEmail(email)
@@ -34,7 +34,7 @@ public class CustomerFactory {
             throw new IllegalArgumentException("Invalid name, email, phone number or password");
         }
 
-        return new Customer.Builder()
+        return new User.Builder()
                 .setFistName(firstName)
                 .setLastName(lastName)
                 .setEmail(email)
@@ -43,8 +43,8 @@ public class CustomerFactory {
                 .build();
     }
 
-    public static Customer createCustomerWithOrders(String firstName, String lastName, String email,
-            java.util.Set<Order> orders) {
+    public static User createCustomerWithOrders(String firstName, String lastName, String email,
+                                                java.util.Set<Order> orders) {
         if (!HelperUtils.isNullOrEmpty(firstName)
                 || !HelperUtils.isNullOrEmpty(lastName)) {
             throw new IllegalArgumentException("Invalid name");
@@ -53,7 +53,7 @@ public class CustomerFactory {
             throw new IllegalArgumentException("Invalid email");
         }
 
-        return new Customer.Builder()
+        return new User.Builder()
                 .setFistName(firstName)
                 .setLastName(lastName)
                 .setEmail(email)
@@ -62,8 +62,8 @@ public class CustomerFactory {
     }
 
     // create customer with bookings
-    public static Customer createCustomerWithBookings(String firstName, String lastName, String email,
-            java.util.Set<Order> orders, Set<Booking> bookings) {
+    public static User createCustomerWithBookings(String firstName, String lastName, String email,
+                                                  java.util.Set<Order> orders, Set<Booking> bookings) {
         if (!HelperUtils.isNullOrEmpty(firstName)
                 || !HelperUtils.isNullOrEmpty(lastName)) {
             throw new IllegalArgumentException("Invalid name");
@@ -71,7 +71,7 @@ public class CustomerFactory {
         if (!HelperUtils.isValidEmail(email)) {
             throw new IllegalArgumentException("Invalid email");
         }
-        return new Customer.Builder()
+        return new User.Builder()
                 .setFistName(firstName)
                 .setLastName(lastName)
                 .setEmail(email)
