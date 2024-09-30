@@ -59,7 +59,7 @@ public class FoodItem {
                 '}';
     }
 
-    private static class Builder {
+    public static class Builder {
         private Long id;
         private String name;
         private double price;
