@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -39,7 +40,7 @@ public class Order {
     private double totalAmount;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ticket> tickets;
+    private Set<Ticket> tickets;
 
     protected Order() {
     }
@@ -76,7 +77,7 @@ public class Order {
         private Date orderDate;
         private Customer customer;
         private double totalAmount;
-        private List<Ticket> tickets;
+        private Set<Ticket> tickets;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -98,7 +99,7 @@ public class Order {
             return this;
         }
 
-        public Builder setTickets(List<Ticket> tickets) {
+        public Builder setTickets(Set<Ticket> tickets) {
             this.tickets = tickets;
             return this;
         }

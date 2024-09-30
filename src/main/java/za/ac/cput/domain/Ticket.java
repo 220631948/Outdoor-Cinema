@@ -3,10 +3,11 @@ package za.ac.cput.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
 import org.springframework.format.annotation.NumberFormat;
 
 import java.util.Objects;
-
+@Getter
 @Entity
 @Table(name = "tickets")
 public class Ticket {
@@ -41,6 +42,10 @@ public class Ticket {
     @JoinColumn(name = "seat_id")
     private Seat seat;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+
     protected Ticket() {
     }
 
@@ -51,31 +56,10 @@ public class Ticket {
         this.quantity = builder.quantity;
         this.booking = builder.booking;
         this.seat = builder.seat;
+        this.order = builder.order;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public TicketType getType() {
-        return type;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public Booking getBooking() {
-        return booking;
-    }
-
-    public Seat getSeat() {
-        return seat;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -109,6 +93,7 @@ public class Ticket {
         private int quantity;
         private Booking booking;
         private Seat seat;
+        private Order order;
 
         public Builder setType(TicketType type) {
             this.type = type;
@@ -135,6 +120,11 @@ public class Ticket {
             return this;
         }
 
+        public Builder setOrder(Order order) {
+            this.order = order;
+            return this;
+        }
+
         public Builder copy(Ticket ticket) {
             this.id = ticket.id;
             this.type = ticket.type;
@@ -142,6 +132,7 @@ public class Ticket {
             this.quantity = ticket.quantity;
             this.booking = ticket.booking;
             this.seat = ticket.seat;
+            this.order = ticket.order;
             return this;
         }
 
