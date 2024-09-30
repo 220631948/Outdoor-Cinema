@@ -17,6 +17,10 @@ public class Seat {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotBlank(message = "Type is required")
+    @Column(name = "seat_type", nullable = false)
+    private String type;
+
     @NotBlank(message = "Row is required")
     @Column(name = "seat_row", nullable = false)
     private String row;
@@ -29,10 +33,12 @@ public class Seat {
     @JoinColumn(name = "screening_id", nullable = false)
     private Screening screening;
 
-    protected Seat() {}
+    protected Seat() {
+    }
 
     private Seat(Builder builder) {
         this.id = builder.id;
+        this.type = builder.type;
         this.row = builder.row;
         this.number = builder.number;
         this.screening = builder.screening;
@@ -40,10 +46,13 @@ public class Seat {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Seat seat = (Seat) o;
-        return number == seat.number && Objects.equals(id, seat.id) && Objects.equals(row, seat.row) && Objects.equals(screening, seat.screening);
+        return number == seat.number && Objects.equals(id, seat.id) && Objects.equals(row, seat.row)
+                && Objects.equals(screening, seat.screening);
     }
 
     @Override
@@ -53,9 +62,15 @@ public class Seat {
 
     public static class Builder {
         private Long id;
+        private String type;
         private String row;
         private int number;
         private Screening screening;
+
+        public Builder setType(String type) {
+            this.type = type;
+            return this;
+        }
 
         public Builder setRow(String row) {
             this.row = row;
@@ -74,6 +89,7 @@ public class Seat {
 
         public Builder copy(Seat seat) {
             this.id = seat.id;
+            this.type = seat.type;
             this.row = seat.row;
             this.number = seat.number;
             this.screening = seat.screening;
