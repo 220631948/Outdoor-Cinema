@@ -32,6 +32,10 @@ public class HelperUtils {
         return i == null || i == 0;
     }
 
+    public static boolean isValidReference(String reference) {
+        return reference != null && reference.matches("^[A-Za-z0-9]{5,50}$");
+    }
+
     // Validate if a string is a valid date (format: yyyy-MM-dd)
     // public static boolean isValidDate(String dateStr) {
     // if (isNullOrEmpty(dateStr)) {
