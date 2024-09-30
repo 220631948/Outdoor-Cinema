@@ -1,4 +1,4 @@
-package com.dailycodework.dreamshops.exceptions;
+package za.ac.cput.exceptions;
 
 public class AlreadyExistsException extends RuntimeException {
     public AlreadyExistsException(String message) {

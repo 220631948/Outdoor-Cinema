@@ -6,6 +6,7 @@ import za.ac.cput.domain.Booking;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
+    Booking findByDate(String date);
     // Implement booking repository methods here
 
 }
