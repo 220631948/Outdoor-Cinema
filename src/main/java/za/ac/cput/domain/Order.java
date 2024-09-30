@@ -2,6 +2,7 @@ package za.ac.cput.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.ToString;
@@ -29,7 +30,7 @@ public class Order {
     private Date orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @NotBlank(message = "User is required")
     private User user;
 
@@ -87,7 +88,7 @@ public class Order {
             return this;
         }
 
-        public Builder setCustomer(User user) {
+        public Builder setUser(User user) {
             this.user = user;
             return this;
         }

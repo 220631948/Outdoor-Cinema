@@ -6,7 +6,6 @@ import za.ac.cput.domain.user.User;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class OrderFactory {
@@ -30,7 +29,7 @@ public class OrderFactory {
         return new Order.Builder()
                 .setOrderDate(orderDate)
                 .setTotalAmount(totalAmount)
-                .setCustomer(user)
+                .setUser(user)
                 .setTickets(tickets)
                 .build();
     }
@@ -50,7 +49,7 @@ public class OrderFactory {
         return new Order.Builder()
                 .setOrderDate(orderDate)
                 .setTotalAmount(totalAmount)
-                .setCustomer(user)
+                .setUser(user)
                 .build();
     }
 
@@ -70,7 +69,7 @@ public class OrderFactory {
             throw new IllegalArgumentException("Total amount must be positive");
         }
         if (user == null) {
-            throw new IllegalArgumentException("Customer is required");
+            throw new IllegalArgumentException("User is required");
         }
     }
 }
