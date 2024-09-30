@@ -119,10 +119,6 @@ public class Promo {
             return this;
         }
 
-        public Promo build() {
-            return new Promo(this);
-        }
-
         public Builder copy(Promo promo) {
             this.id = promo.id;
             this.code = promo.code;
@@ -130,6 +126,10 @@ public class Promo {
             this.startDate = promo.startDate;
             this.endDate = promo.endDate;
             return this;
+        }
+
+        public Promo build() {
+            return new Promo(this);
         }
     }
 }
