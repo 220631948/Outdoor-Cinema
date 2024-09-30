@@ -7,6 +7,7 @@ import za.ac.cput.domain.Ticket;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class OrderFactory {
 
@@ -22,7 +23,7 @@ public class OrderFactory {
         }
     }
 
-    public static Order createOrder(Date orderDate, double totalAmount, Customer customer, List<Ticket> tickets) {
+    public static Order createOrder(Date orderDate, double totalAmount, Customer customer, Set<Ticket> tickets) {
         validateOrder(orderDate, totalAmount, customer);
         if (tickets == null || tickets.isEmpty()) {
             throw new IllegalArgumentException("At least one ticket item is required");
