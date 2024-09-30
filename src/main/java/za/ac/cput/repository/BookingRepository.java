@@ -13,6 +13,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     boolean existsByDate(@NotNull(message = "Booking date is required") Date bookingDate);
     // Implement booking repository methods here
-    
+
 
 }
