@@ -29,11 +29,4 @@ public class FoodItemFactory {
         }
         return createFoodItem(name, price, null);
     }
-
-    public static FoodItem createFoodItemWithoutName(double price, String description) {
-        if (price <= 0) {
-            throw new IllegalArgumentException("Price must be positive");
-        }
-        return createFoodItem(null, price, description);
-    }
 }

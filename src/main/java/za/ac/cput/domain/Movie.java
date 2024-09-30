@@ -4,23 +4,14 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -40,6 +31,11 @@ public class Movie {
     @Size(min = 2, max = 100)
     private String title;
 
+    @NotBlank(message = "genre is required")
+    @Column(name = "movie_genre")
+    @Enumerated(EnumType.STRING)
+    private MovieGenreType genre;
+
     @NotBlank(message = "director is required")
     @Column(name = "movie_director")
     @Size(min = 5, max = 50)
@@ -47,6 +43,7 @@ public class Movie {
 
     // movie duration
     @NotBlank(message = "duration is required")
+    @Positive(message = "duration must be positive")
     @Column(name = "movie_duration")
     private int duration;
 
@@ -74,6 +71,7 @@ public class Movie {
     private Movie(Builder builder) {
         this.id = builder.id;
         this.title = builder.title;
+        this.genre = builder.genre;
         this.director = builder.director;
         this.duration = builder.duration;
         this.releaseYear = builder.releaseYear;
@@ -87,8 +85,12 @@ public class Movie {
         if (o == null || getClass() != o.getClass())
             return false;
         Movie movie = (Movie) o;
-        return duration == movie.duration && Objects.equals(id, movie.id) && Objects.equals(title, movie.title)
-                && Objects.equals(director, movie.director) && Objects.equals(releaseYear, movie.releaseYear)
+        return duration == movie.duration
+                && Objects.equals(id, movie.id)
+                && Objects.equals(title, movie.title)
+                && Objects.equals(genre, movie.genre)
+                && Objects.equals(director, movie.director)
+                && Objects.equals(releaseYear, movie.releaseYear)
                 && Objects.equals(createdDate, movie.createdDate)
                 && Objects.equals(lastModifiedDate, movie.lastModifiedDate)
                 && Objects.equals(screenings, movie.screenings);
@@ -96,13 +98,14 @@ public class Movie {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, director, duration, releaseYear, createdDate, lastModifiedDate, screenings);
+        return Objects.hash(id, title, genre, director, duration, releaseYear, createdDate, lastModifiedDate, screenings);
     }
 
 
     public static class Builder {
         private Long id;
         private String title;
+        private MovieGenreType genre;
         private String director;
         private int duration;
         private Date releaseYear;
@@ -110,6 +113,11 @@ public class Movie {
 
         public Builder setTitle(String title) {
             this.title = title;
+            return this;
+        }
+
+        public Builder setGenre(MovieGenreType genre) {
+            this.genre = genre;
             return this;
         }
 
@@ -136,6 +144,7 @@ public class Movie {
         public Builder copy(Movie movie) {
             this.id = movie.id;
             this.title = movie.title;
+            this.genre = movie.genre;
             this.director = movie.director;
             this.duration = movie.duration;
             this.releaseYear = movie.releaseYear;
