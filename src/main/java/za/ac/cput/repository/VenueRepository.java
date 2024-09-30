@@ -1,4 +1,8 @@
 package za.ac.cput.repository;
 
-public interface VenueRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface VenueRepository extends JpaRepository<VenueRepository, Long> {
 }

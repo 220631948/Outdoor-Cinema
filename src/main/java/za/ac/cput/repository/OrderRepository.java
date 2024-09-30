@@ -1,4 +1,10 @@
 package za.ac.cput.repository;
 
-public interface OrderRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import za.ac.cput.domain.Order;
+
+@Repository
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    Order findByUserId(Long userId);
 }
