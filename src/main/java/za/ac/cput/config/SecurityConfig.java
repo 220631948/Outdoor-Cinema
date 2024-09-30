@@ -1,6 +1,7 @@
 package za.ac.cput.config;
 
 import jakarta.servlet.Filter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import za.ac.cput.filter.JwtRequestFilter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 /**
  * Configuration class for Spring Security.
@@ -31,8 +33,9 @@ public class SecurityConfig {
      * Constructor to initialize UserDetailsService and JwtRequestFilter.
      *
      * @param userDetailsService the service to load user-specific data
-     * @param jwtRequestFilter the filter to handle JWT authentication
+     * @param jwtRequestFilter   the filter to handle JWT authentication
      */
+    @Autowired
     public SecurityConfig(UserDetailsService userDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.userDetailsService = userDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
@@ -42,20 +45,19 @@ public class SecurityConfig {
      * Configures the security filter chain.
      *
      * @param http the HttpSecurity to modify
-     * @return the configured SecurityFilterChain
      * @throws Exception if an error occurs
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable()) // Disable CSRF protection
-            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
-            .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/authenticate", "/register").permitAll() // Allow unauthenticated access to these endpoints
-                .anyRequest().authenticated() // Require authentication for all other requests
-            )
-            .sessionManagement((session) -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Use stateless session management
-            );
+        http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
+                .authorizeRequests((requests) -> requests
+                        .requestMatchers("/authenticate", "/register").permitAll() // Allow unauthenticated access to these endpoints
+                        .anyRequest().authenticated() // Require authentication for all other requests
+                )
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Use stateless session management
+                );
         http.addFilterBefore((Filter) jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter before the username/password filter
         return http.build();
     }
@@ -64,15 +66,15 @@ public class SecurityConfig {
      * Configures the authentication manager.
      *
      * @param http the HttpSecurity to modify
-     * @return the configured AuthenticationManager
+     * @return the authentication manager
      * @throws Exception if an error occurs
      */
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); // Set user details service and password encoder
-        return authenticationManagerBuilder.build();
+        AuthenticationManagerBuilder authManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authManagerBuilder.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+        return authManagerBuilder.build();
     }
 
     /**
