@@ -5,5 +5,7 @@ public enum TicketType {
     VIP,
     STUDENT,
     SENIOR,
-    CHILDREN
+    CHILDREN,
+    DISABLED
+
 }
