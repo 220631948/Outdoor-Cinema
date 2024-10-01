@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.format.annotation.NumberFormat;
@@ -15,6 +16,7 @@ import za.ac.cput.domain.Booking;
 import za.ac.cput.domain.Order;
 
 @Getter
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -45,12 +47,18 @@ public class User {
     @Column(name = "user_phone_number")
     private String phoneNumber;
 
+    @NotBlank(message = "UserName is required")
+    @Size(max = 50)
+    @Column(name = "user_name")
+    private String username;
+
+
     @NotBlank(message = "password is required")
     @Size(min = 10, max = 25)
     @Column(name = "user_password")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @ToString.Exclude
     @Column(name = "user_bookings")
     private Set<Booking> bookings;
@@ -68,9 +76,15 @@ public class User {
         this.lastName = builder.lastName;
         this.email = builder.email;
         this.phoneNumber = builder.phoneNumber;
+        this.username = builder.username;
         this.password = builder.password;
         this.bookings = builder.bookings;
         this.orders = builder.orders;
+    }
+
+    public User(@NotBlank(message = "UserName is required") @Size(max = 50) String username, @NotBlank(message = "password is required") @Size(min = 10, max = 25) String password) {
+        this.username = username;
+        this.password = password;
     }
 
     // equals and hashcode
@@ -83,13 +97,16 @@ public class User {
             return false;
         User user = (User) o;
         return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName)
-                && Objects.equals(email, user.email) && Objects.equals(phoneNumber, user.phoneNumber)
-                && Objects.equals(password, user.password) && Objects.equals(bookings, user.bookings);
+                && Objects.equals(email, user.email)
+                && Objects.equals(phoneNumber, user.phoneNumber)
+                && Objects.equals(username, user.username)
+                && Objects.equals(password, user.password)
+                && Objects.equals(bookings, user.bookings);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, email, phoneNumber, password, bookings);
+        return Objects.hash(id, firstName, email, phoneNumber, username, password, bookings);
     }
 
     @Override
@@ -100,6 +117,7 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", userName='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", bookings=" + bookings +
                 ", orders=" + orders +
@@ -112,6 +130,7 @@ public class User {
         private String lastName;
         private String email;
         private String phoneNumber;
+        private String username;
         private String password;
         private Set<Booking> bookings;
         private Set<Order> orders;
@@ -136,6 +155,11 @@ public class User {
             return this;
         }
 
+        public Builder setUserName(String username) {
+            this.username = username;
+            return this;
+        }
+
         public Builder setPassword(String password) {
             this.password = password;
             return this;
@@ -157,6 +181,7 @@ public class User {
             this.lastName = user.lastName;
             this.email = user.email;
             this.phoneNumber = user.phoneNumber;
+            this.username = user.username;
             this.password = user.password;
             this.bookings = user.bookings;
             this.orders = user.orders;

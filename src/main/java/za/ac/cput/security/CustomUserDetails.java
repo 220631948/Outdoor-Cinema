@@ -1,5 +1,7 @@
 package za.ac.cput.security;
 
+import lombok.Getter;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,9 +10,13 @@ import za.ac.cput.domain.user.User;
 import java.util.Collection;
 import java.util.Collections;
 
+@Getter
 /**
  * Custom implementation of UserDetails to integrate with Spring Security.
  */
+
+@Profile("!test")
+
 public class CustomUserDetails implements UserDetails {
 
     private final User user;

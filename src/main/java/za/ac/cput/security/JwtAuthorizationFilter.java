@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import za.ac.cput.util.JwtUtil;
 import za.ac.cput.utils.AuthenticationUtil;
+import za.ac.cput.utils.JwtUtil;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ import java.io.IOException;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final UserDetailsService userDetailsService;
-    private final JwtUtil jwtUtil;
+    private final za.ac.cput.utils.JwtUtil jwtUtil;
 
     @Autowired
     public JwtAuthorizationFilter(UserDetailsService userDetailsService, JwtUtil jwtUtil) {
@@ -66,9 +66,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
      * Authenticates the user based on the JWT token and username.
      *
      * @param username the username extracted from the JWT token
-     * @param jwt the JWT token
-     * @param request the HTTP request
+     * @param jwt      the JWT token
+     * @param request  the HTTP request
      */
+
     private void authenticateUser(String username, String jwt, HttpServletRequest request) {
         AuthenticationUtil.authenticateUser(userDetailsService, jwtUtil, username, jwt, request);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

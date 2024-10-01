@@ -9,7 +9,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 
 public class AuthenticationUtil {
 
-    public static void authenticateUser(UserDetailsService userDetailsService, za.ac.cput.util.JwtUtil jwtUtil, String username, String jwt, HttpServletRequest request) {
+    public static void authenticateUser(UserDetailsService userDetailsService, za.ac.cput.utils.JwtUtil jwtUtil, String username, String jwt, HttpServletRequest request) {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (Boolean.TRUE.equals(jwtUtil.validateToken(jwt, userDetails.getUsername()))) {
@@ -20,4 +20,5 @@ public class AuthenticationUtil {
             }
         }
     }
+
 }

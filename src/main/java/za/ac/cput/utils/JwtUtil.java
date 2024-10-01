@@ -1,4 +1,4 @@
-package za.ac.cput.util;
+package za.ac.cput.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

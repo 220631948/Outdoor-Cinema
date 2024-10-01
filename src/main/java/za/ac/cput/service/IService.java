@@ -1,4 +1,4 @@
-package za.ac.cput.sevice;
+package za.ac.cput.service;
 
 import org.springframework.stereotype.Service;
 
