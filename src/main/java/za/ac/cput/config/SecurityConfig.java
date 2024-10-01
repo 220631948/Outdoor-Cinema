@@ -48,15 +48,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable) // Disable CSRF protection
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom
+                                                                                   // configuration
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/authenticate", "/register").permitAll() // Allow unauthenticated access to these endpoints
+                        .requestMatchers("/authenticate", "/register").permitAll() // Allow unauthenticated access to
+                                                                                   // these endpoints
                         .anyRequest().authenticated() // Require authentication for all other requests
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Use stateless session management
                 );
-        http.addFilterBefore((Filter) jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter before the username/password filter
+        http.addFilterBefore((Filter) jwtRequestFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+                                                                                                     // before the
+                                                                                                     // username/password
+                                                                                                     // filter
         return http.build();
     }
 

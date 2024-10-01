@@ -14,16 +14,18 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    public JwtRequestFilter(UserDetailsService userDetailsService) {
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
-        // Implement JWT validation logic here
-        chain.doFilter(request, response);
-    }
+    // @Override
+    // public void doFilter(HttpServletRequest request, HttpServletResponse
+    // response, FilterChain chain)
+    // throws IOException, ServletException {
+    // // Implement JWT validation logic here
+    // chain.doFilter(request, response);
+    // }
 }
