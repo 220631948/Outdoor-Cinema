@@ -21,6 +21,11 @@ public class HelperUtils {
         return d == null || d == 0.0;
     }
 
+    // check if an object is null or empty
+    public static boolean isNullOrEmpty(Object o) {
+        return o == null || o.toString().trim().isEmpty();
+    }
+
     // Check if a email is valid
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Invalid email format")
     public static boolean isValidEmail(String email) {

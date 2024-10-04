@@ -7,61 +7,51 @@ import za.ac.cput.utils.HelperUtils;
 public class MovieFactory {
 
     public static Movie createMovie(String title, MovieGenreType genre, int duration, String director) throws IllegalArgumentException {
-        if (HelperUtils.isNullOrEmpty(title)) {
-            throw new IllegalArgumentException("Invalid movie title");
-        }
-        if (HelperUtils.isNullOrEmpty(genre.ordinal())) {
-            throw new IllegalArgumentException("Invalid movie genre");
-        }
-        if (duration <= 0) {
-            throw new IllegalArgumentException("Duration must be positive");
-        }
-        if (HelperUtils.isNullOrEmpty(director)) {
-            throw new IllegalArgumentException("Invalid movie director");
+        if (HelperUtils.isNullOrEmpty(title)
+                || HelperUtils.isNullOrEmpty(genre.ordinal())
+                || duration < 120
+                || HelperUtils.isNullOrEmpty(director)) {
+            return null;
+
+            return new Movie.Builder()
+                    .setTitle(title)
+                    .setGenre(genre)
+                    .setDuration(duration)
+                    .setDirector(director)
+                    .build();
         }
 
-        return new Movie.Builder()
-                .setTitle(title)
-                .setGenre(genre)
-                .setDuration(duration)
-                .setDirector(director)
-                .build();
-    }
+        /*public static Movie createMovieWithoutDirector (String title, MovieGenreType genre,int duration){
+            if (HelperUtils.isNullOrEmpty(title)
+                    || HelperUtils.isNullOrEmpty(genre.ordinal())
+                    || duration < 120) {
+                return null;
+            }
 
-    public static Movie createMovieWithoutDirector(String title, MovieGenreType genre, int duration) {
-        if (HelperUtils.isNullOrEmpty(title)) {
-            throw new IllegalArgumentException("Invalid movie title");
-        }
-        if (HelperUtils.isNullOrEmpty(genre.ordinal())) {
-            throw new IllegalArgumentException("Invalid movie genre");
-        }
-        if (duration <= 0) {
-            throw new IllegalArgumentException("Duration must be positive");
-        }
+            return new Movie.Builder()
+                    .setTitle(title)
+                    .setGenre(genre)
+                    .setDuration(duration)
+                    .build();
 
-        return new Movie.Builder()
-                .setTitle(title)
-                .setGenre(genre)
-                .setDuration(duration)
-                .build();
+        }*/
 
-    }
-
-    public static Movie createMovieWithoutGenre(String title, int duration, String director) {
-        if (HelperUtils.isNullOrEmpty(title)) {
-            throw new IllegalArgumentException("Invalid movie title");
-        }
-        if (duration <= 0) {
-            throw new IllegalArgumentException("Duration must be positive");
-        }
-        if (HelperUtils.isNullOrEmpty(director)) {
-            throw new IllegalArgumentException("Invalid movie director");
-        }
-
-        return new Movie.Builder()
-                .setTitle(title)
-                .setDuration(duration)
-                .setDirector(director)
-                .build();
+//        public static Movie createMovieWithoutGenre (String title,int duration, String director){
+//            if (HelperUtils.isNullOrEmpty(title)) {
+//                throw new IllegalArgumentException("Invalid movie title");
+//            }
+//            if (duration <= 0) {
+//                throw new IllegalArgumentException("Duration must be positive");
+//            }
+//            if (HelperUtils.isNullOrEmpty(director)) {
+//                throw new IllegalArgumentException("Invalid movie director");
+//            }
+//
+//            return new Movie.Builder()
+//                    .setTitle(title)
+//                    .setDuration(duration)
+//                    .setDirector(director)
+//                    .build();
+//        }
     }
 }

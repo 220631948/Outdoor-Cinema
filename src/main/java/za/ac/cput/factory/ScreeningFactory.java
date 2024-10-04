@@ -30,7 +30,7 @@ public class ScreeningFactory {
         return new Screening.Builder()
                 .movie(movie)
                 .venue(venue)
-                .date(date.toString())
+                .date(date)
                 .name(name)
                 .time(time)
                 .bookings(bookings)

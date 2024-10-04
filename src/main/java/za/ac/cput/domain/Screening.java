@@ -3,6 +3,7 @@ package za.ac.cput.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Instant;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "screenings")
 public class Screening {
@@ -97,8 +99,8 @@ public class Screening {
         private Venue venue;
         private Set<Booking> bookings;
 
-        public Builder date(String date) {
-            this.date = Date.from((Instant) DateTimeFormatter.ofPattern("yyyy-MM-dd").parse(date));
+        public Builder date(Date date) {
+            this.date = date;
             return this;
         }
 

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -68,8 +69,17 @@ public class Movie {
     protected Movie() {
     }
 
+    // constructor without id field
+    public Movie(String title, MovieGenreType genre, String director, int duration, java.util.Date releaseYear, Set<Screening> screenings) {
+        this.title = title;
+        this.genre = genre;
+        this.director = director;
+        this.duration = duration;
+        this.releaseYear = releaseYear;
+        this.screenings = screenings;
+    }
+
     private Movie(Builder builder) {
-        this.id = builder.id;
         this.title = builder.title;
         this.genre = builder.genre;
         this.director = builder.director;
@@ -103,7 +113,6 @@ public class Movie {
 
 
     public static class Builder {
-        private Long id;
         private String title;
         private MovieGenreType genre;
         private String director;
@@ -142,7 +151,6 @@ public class Movie {
         }
 
         public Builder copy(Movie movie) {
-            this.id = movie.id;
             this.title = movie.title;
             this.genre = movie.genre;
             this.director = movie.director;

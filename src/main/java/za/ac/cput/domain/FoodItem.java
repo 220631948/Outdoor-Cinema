@@ -28,6 +28,7 @@ public class FoodItem {
 
     @Column(name = "foodItem_description", nullable = false)
     @NotBlank(message = "Description is required")
+    @Size(min = 10, max = 255, message = "Description must be between 10 and 255 characters")
     private String description;
 
     @Column(name = "foodItem_quantity", nullable = false)
