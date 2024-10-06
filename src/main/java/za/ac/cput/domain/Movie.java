@@ -1,6 +1,7 @@
 package za.ac.cput.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -42,13 +43,10 @@ public class Movie {
     @Size(min = 5, max = 50)
     private String director;
 
-    // movie duration
-    @NotBlank(message = "duration is required")
     @Positive(message = "duration must be positive")
     @Column(name = "movie_duration")
     private int duration;
 
-    @NotBlank(message = "duration is required")
     @DateTimeFormat(pattern = "yyyy")
     @Column(name = "movie_release_year")
     private java.util.Date releaseYear;
@@ -69,7 +67,6 @@ public class Movie {
     protected Movie() {
     }
 
-    // constructor without id field
     public Movie(String title, MovieGenreType genre, String director, int duration, java.util.Date releaseYear, Set<Screening> screenings) {
         this.title = title;
         this.genre = genre;
@@ -111,7 +108,6 @@ public class Movie {
         return Objects.hash(id, title, genre, director, duration, releaseYear, createdDate, lastModifiedDate, screenings);
     }
 
-
     public static class Builder {
         private String title;
         private MovieGenreType genre;
@@ -146,6 +142,9 @@ public class Movie {
         }
 
         public Builder setScreening(Screening screening) {
+            if (this.screenings == null) {
+                this.screenings = new HashSet<>();
+            }
             this.screenings.add(screening);
             return this;
         }
@@ -163,5 +162,4 @@ public class Movie {
             return new Movie(this);
         }
     }
-
 }

@@ -29,7 +29,6 @@ public class Venue {
     private int capacity;
 
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(name = "venue_screening")
     private Set<Screening> screenings;
 
     protected Venue() {
@@ -62,8 +61,6 @@ public class Venue {
     public Set<Screening> getScreenings() {
         return screenings;
     }
-
-    // equals and hashcode
 
     @Override
     public boolean equals(Object o) {
@@ -132,5 +129,4 @@ public class Venue {
             return new Venue(this);
         }
     }
-
 }
