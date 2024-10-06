@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import za.ac.cput.domain.user.User;
 
 import java.util.Date;
 import java.util.Set;
@@ -25,8 +26,8 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @NotBlank(message = "Customer is required")
-    private Customer customer;
+    @NotBlank(message = "User is required")
+    private User user;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Ticket> tickets;
@@ -47,7 +48,7 @@ public class Booking {
     private Booking(Builder builder) {
         this.id = builder.id;
         this.screening = builder.screening;
-        this.customer = builder.customer;
+        this.user = builder.user;
         this.tickets = builder.tickets;
         this.bookingReference = builder.bookingReference;
         this.bookingDate = builder.bookingDate;
@@ -58,7 +59,7 @@ public class Booking {
         return getClass().getSimpleName() + "(" +
                 "id = " + id + ", " +
                 "screening = " + screening + ", " +
-                "customer = " + customer + ", " +
+                "user = " + user + ", " +
                 "bookingReference = " + bookingReference + ", " +
                 "bookingDate = " + bookingDate + ")";
     }
@@ -66,7 +67,7 @@ public class Booking {
     public static class Builder {
         private Long id;
         private Screening screening;
-        private Customer customer;
+        private User user;
         private Set<Ticket> tickets;
         private String bookingReference;
         private Date bookingDate;
@@ -76,8 +77,8 @@ public class Booking {
             return this;
         }
 
-        public Builder setCustomer(Customer customer) {
-            this.customer = customer;
+        public Builder setCustomer(User user) {
+            this.user = user;
             return this;
         }
 
@@ -99,7 +100,7 @@ public class Booking {
         public Builder copy(Booking booking) {
             this.id = booking.id;
             this.screening = booking.screening;
-            this.customer = booking.customer;
+            this.user = booking.user;
             this.tickets = booking.tickets;
             this.bookingReference = booking.bookingReference;
             this.bookingDate = booking.bookingDate;

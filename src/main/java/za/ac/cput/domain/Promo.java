@@ -13,9 +13,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.executable.ValidateOnExecution;
 import lombok.Getter;
 
 @Getter
@@ -34,7 +36,7 @@ public class Promo {
     private String code;
 
     @Column(name = "discount_percentage", nullable = false)
-    @Size(min = 1, max = 100, message = "Discount percentage must be between 1 and 100")
+    @Size(min = 0, max = 100, message = "Discount percentage must be between 1 and 100")
     @NotBlank(message = "Promo code is required")
     @Positive(message = "Discount percentage must be a positive integer")
     private int discountPercentage;

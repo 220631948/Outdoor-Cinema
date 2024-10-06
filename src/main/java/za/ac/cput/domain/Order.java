@@ -5,12 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+import za.ac.cput.domain.user.User;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,9 +30,9 @@ public class Order {
     private Date orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    @NotBlank(message = "Customer is required")
-    private Customer customer;
+    @JoinColumn(name = "user_id", nullable = false)
+    @NotBlank(message = "User is required")
+    private User user;
 
     @Column(name = "total_amount", nullable = false)
     @Positive(message = "Total amount must be positive")
@@ -48,7 +47,7 @@ public class Order {
     private Order(Builder builder) {
         this.id = builder.id;
         this.orderDate = builder.orderDate;
-        this.customer = builder.customer;
+        this.user = builder.user;
         this.totalAmount = builder.totalAmount;
         this.tickets = builder.tickets;
     }
@@ -63,19 +62,19 @@ public class Order {
         return Double.compare(order.totalAmount, totalAmount) == 0 &&
                 Objects.equals(id, order.id) &&
                 Objects.equals(orderDate, order.orderDate) &&
-                Objects.equals(customer, order.customer) &&
+                Objects.equals(user, order.user) &&
                 Objects.equals(tickets, order.tickets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderDate, customer, totalAmount, tickets);
+        return Objects.hash(id, orderDate, user, totalAmount, tickets);
     }
 
     public static class Builder {
         private Long id;
         private Date orderDate;
-        private Customer customer;
+        private User user;
         private double totalAmount;
         private Set<Ticket> tickets;
 
@@ -89,8 +88,8 @@ public class Order {
             return this;
         }
 
-        public Builder setCustomer(Customer customer) {
-            this.customer = customer;
+        public Builder setUser(User user) {
+            this.user = user;
             return this;
         }
 
@@ -107,7 +106,7 @@ public class Order {
         public Builder copy(Order order) {
             this.id = order.id;
             this.orderDate = order.orderDate;
-            this.customer = order.customer;
+            this.user = order.user;
             this.totalAmount = order.totalAmount;
             this.tickets = order.tickets;
             return this;
